@@ -1,0 +1,35 @@
+import bs4
+from urllib.request import urlopen as uReq
+import requests
+
+
+proxy = {
+ 'http': 'http://nl-userproxy-access.net.abnamro.com:8080',
+ 'https': 'http://nl-userproxy-access.net.abnamro.com:8080',
+}
+
+url = ("https://www.bol.com/nl/s/?searchtext=dip+bars&searchContext=media_all&appliedSearchContextId=media_all&suggestFragment=dip+ba&adjustedSection=&originalSection=main&originalSearchContext=media_all&section=main&N=0&defaultSearchContext=media_all")
+#bol_url = requests.get("https://www.bol.com/nl/s/?searchtext=dip+bars&searchContext=media_all&appliedSearchContextId=media_all&suggestFragment=dip+ba&adjustedSection=&originalSection=main&originalSearchContext=media_all&section=main&N=0&defaultSearchContext=media_all",proxies=proxies)
+
+r = requests.get(url,proxies= proxy)
+
+page_soup = bs4.BeautifulSoup(r.content,'lxml')
+containers = page_soup.find_all('li', {"class": 'product-item--row js_item_root'})
+
+container = page_soup.select('div[class="product-title--inline"]')#.get_text()
+#print(container)
+for i in container:
+    print(str(i.a.get_text()) + '\n')
+
+#for container in containers:
+ #   print(container.a.img)
+
+#for i in container:
+ #   print()
+
+#page_soup.find_all()
+
+
+#webscrape()
+     
+
